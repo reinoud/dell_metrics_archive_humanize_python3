@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ###########################################################################
 # Copyright (C) Dell EMC 2021-2022
@@ -88,37 +88,37 @@ class HumanizeFiveSecMetrics(Humanize):
         # 4. A list of function id's from self.additional_cols to call for this particular metric file.
         self.metric_files = [
             (PERFORMANCE_COUNTER_APPLIANCE_5_SEC, ('appliance_id', 'timestamp'), self.appliance_record,
-             range(1, 14, 1)),
+             list(range(1, 14, 1))),
             (PERFORMANCE_COUNTER_CLUSTER_5_SEC, ('cluster_id', 'timestamp'), self.cluster_record,
-             range(1, 14, 1)),
+             list(range(1, 14, 1))),
             (PERFORMANCE_COUNTER_HOST_5_SEC, ('host_id', 'timestamp'), self.host_record,
-             range(1, 7, 1)),
+             list(range(1, 7, 1))),
             (PERFORMANCE_COUNTER_HOST_GROUP_5_SEC, ('hg_id', 'timestamp'), self.host_group_record,
-             range(1, 7, 1)),
+             list(range(1, 7, 1))),
             (PERFORMANCE_COUNTER_INITIATOR_5_SEC, ('initiator_id', 'timestamp'), self.initiator_record,
-             range(1, 7, 1)),
+             list(range(1, 7, 1))),
             (PERFORMANCE_COUNTER_IP_PORT_5_SEC, ('ip_port_id', 'timestamp'), self.ip_port_record,
-             range(1, 7, 1)),
+             list(range(1, 7, 1))),
             (PERFORMANCE_COUNTER_NODE_5_SEC, ('node_id', 'timestamp'), self.node_record,
-             range(1, 14, 1)),
+             list(range(1, 14, 1))),
             (PERFORMANCE_COUNTER_FC_NODE_5_SEC, ('node_id', 'timestamp'), self.fe_fc_node_record,
-             range(1, 13, 1) + range(14, 21, 1)),
+             list(range(1, 13, 1)) + list(range(14, 21, 1))),
             (PERFORMANCE_COUNTER_FC_PORT_5_SEC, ('fe_port_id', 'timestamp'), self.fe_fc_port_record,
-             range(1, 13, 1) + range(14, 21, 1)),
+             list(range(1, 13, 1)) + list(range(14, 21, 1))),
             (PERFORMANCE_COUNTER_VOL_5_SEC, ('volume_id', 'timestamp'), self.volume_record,
-             range(1, 7, 1)),
+             list(range(1, 7, 1))),
             (PERFORMANCE_COUNTER_VG_5_SEC, ('vg_id', 'timestamp'), self.vg_record,
-             range(1, 7, 1)),
+             list(range(1, 7, 1))),
             (PERFORMANCE_COUNTER_VM_5_SEC, ('vm_id', 'timestamp'), self.vm_record,
-             range(1, 7, 1)),
+             list(range(1, 7, 1))),
             (PERFORMANCE_COUNTER_ETH_NODE_5_SEC, ('node_id', 'timestamp'), self.fe_eth_node_record,
-             range(21, 28, 1)),
+             list(range(21, 28, 1))),
             (PERFORMANCE_COUNTER_ETH_PORT_5_SEC, ('fe_port_id', 'timestamp'), self.fe_eth_port_record,
-             range(21, 28, 1)),
+             list(range(21, 28, 1))),
             (PERFORMANCE_COUNTER_NFS_5_SEC, ('node_id', 'appliance_id', 'timestamp'), self.sdnas_nfs_record,
-             range(1, 13, 1)),
+             list(range(1, 13, 1))),
             (PERFORMANCE_COUNTER_SMB_5_SEC, ('node_id', 'appliance_id', 'timestamp'), self.sdnas_smb_record,
-             range(1, 13, 1))
+             list(range(1, 13, 1)))
         ]
 
     def add_details(self, filename):
@@ -262,7 +262,7 @@ class HumanizeFiveSecMetrics(Humanize):
         # Perform calculation only if two consecutive records have different timestamp values and the same id value.
         # Return 0 if otherwise.
         # The compare_indices contains one or more id values and the last is the index to the timestamp.
-        same_id = map(lambda index: t0[index] == t1[index], compare_indices[:-1])
+        same_id = map(lambda index: t0[index] == t1[index], list(compare_indices)[:-1])
         if t0.timestamp != t1.timestamp and all(same_id):
             try:
                 read_ios_diff = t1.read_ios - t0.read_ios
@@ -300,7 +300,7 @@ class HumanizeFiveSecMetrics(Humanize):
         # Perform calculation only if two consecutive records have different timestamp values and the same id value.
         # Return 0 if otherwise.
         # The compare_indices contains one or more id values and the last is the index to the timestamp.
-        same_id = map(lambda index: t0[index] == t1[index], compare_indices[:-1])
+        same_id = map(lambda index: t0[index] == t1[index], list(compare_indices)[:-1])
         if t0.timestamp != t1.timestamp and all(same_id):
             try:
                 read_ios_diff = t1.read_ios - t0.read_ios
@@ -338,7 +338,7 @@ class HumanizeFiveSecMetrics(Humanize):
         # Perform calculation only if two consecutive records have different timestamp values and the same id value.
         # Return 0 if otherwise.
         # The compare_indices contains one or more id values and the last is the index to the timestamp.
-        same_id = map(lambda index: t0[index] == t1[index], compare_indices[:-1])
+        same_id = map(lambda index: t0[index] == t1[index], list(compare_indices)[:-1])
         if t0.timestamp != t1.timestamp and all(same_id):
             try:
                 time_diff = (t1.timestamp - t0.timestamp).total_seconds()
@@ -373,7 +373,7 @@ class HumanizeFiveSecMetrics(Humanize):
 
         # Perform calculation only if two consecutive records have different timestamp values and the same id value.
         # The compare_indices contains one or more id values and the last is the index to the timestamp.
-        same_id = map(lambda index: t0[index] == t1[index], compare_indices[:-1])
+        same_id = map(lambda index: t0[index] == t1[index], list(compare_indices)[:-1])
         if t0.timestamp != t1.timestamp and all(same_id):
             try:
                 time_diff = (t1.timestamp - t0.timestamp).total_seconds()
@@ -408,7 +408,7 @@ class HumanizeFiveSecMetrics(Humanize):
         # Perform calculation only if two consecutive records have different timestamp values and the same id value.
         # Return 0 if otherwise.
         # The compare_indices contains one or more id values and the last is the index to the timestamp.
-        same_id = map(lambda index: t0[index] == t1[index], compare_indices[:-1])
+        same_id = map(lambda index: t0[index] == t1[index], list(compare_indices)[:-1])
         if t0.timestamp != t1.timestamp and all(same_id):
             try:
                 total_ticks = t1.total_ticks - t0.total_ticks
@@ -450,7 +450,7 @@ class HumanizeFiveSecMetrics(Humanize):
 
         # Perform calculation only if two consecutive records have different timestamp values and the same id value.
         # The compare_indices contains one or more id values and the last is the index to the timestamp.
-        same_id = map(lambda index: t0[index] == t1[index], compare_indices[:-1])
+        same_id = map(lambda index: t0[index] == t1[index], list(compare_indices)[:-1])
         if t0.timestamp != t1.timestamp and all(same_id):
             try:
                 rate_diff = getattr(t1, rate_header) - getattr(t0, rate_header)
